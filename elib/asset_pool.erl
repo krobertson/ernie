@@ -140,4 +140,4 @@ start_handlers(Assets, Count, Handler, Token) ->
   start_handlers(Assets2, Count - 1, Handler, Token).
 
 create_asset(Handler, Token) ->
-  {asset, port_wrapper:wrap_link("ruby " ++ Handler), Token}.
+  {asset, port_wrapper:wrap_link(Handler), Token}.
