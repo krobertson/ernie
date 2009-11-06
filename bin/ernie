@@ -65,6 +65,16 @@ OptionParser.new do |opts|
   opts.on("-P", "--pidfile PIDFILE", "Location to write pid file.") do |x|
     options[:pidfile] = x
   end
+
+  opts.on("-u", "--user USERNAME", "The user to run as") do |x|
+    require 'etc'
+    options[:uid] = Etc.getpwnam(x).uid
+  end
+
+  opts.on("-g", "--group GROUP", "The group to run as") do |x|
+    require 'etc'
+    options[:gid] = Etc.getgrnam(x).gid
+  end
 end.parse!
 
 if command = ARGV[0]
@@ -85,6 +95,9 @@ else
     puts "A handler must be specified: ernie -h /path/to/handler.rb"
     exit(1)
   end
+
+  Process::Sys.setgid(options[:gid]) if options[:gid]
+  Process::Sys.setuid(options[:uid]) if options[:uid]
 
   handler = options[:handler]
   port = options[:port] || DEFAULT_PORT

@@ -32,6 +32,8 @@ Running
         -n, --number NUMBER              Number of handler instances
         -d, --detached                   Run as a daemon
         -P, --pidfile PIDFILE            Location to write pid file.
+        -u, --user USERNAME              The user to run as
+        -g, --group GROUP                The group to run as
     
     Commands:
       <none>                Start an Ernie server.
@@ -47,6 +49,11 @@ Running
       ernie reload-handlers -p 9999
         Reload the handlers for the ernie server currently running on
         port 9999.
+
+      ernie -d -p 9998 -n 5 -h calc.rb -u www-data -u www-data
+        Similar to the above command to start the ernie server, but this
+        one will run the Erlang server and the child handlers as the
+        www-data user and group.
 
 Example Handler
 ---------------
